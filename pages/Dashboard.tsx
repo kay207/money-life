@@ -155,7 +155,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigate, user }) => {
   };
 
   return (
-    <div className="px-4 py-6 space-y-6 relative pb-24">
+    <div className="px-4 pt-14 pb-24 space-y-6 relative">
       <Confetti isActive={showConfetti} />
 
       {/* Header */}

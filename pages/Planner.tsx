@@ -90,7 +90,7 @@ export const Planner: React.FC = () => {
 
   return (
     <div className="bg-slate-50 min-h-full">
-      <div className="px-4 py-6 pb-24 space-y-6">
+      <div className="px-4 pt-14 pb-24 space-y-6">
         
         {/* Header */}
         <div>

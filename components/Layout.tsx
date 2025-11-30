@@ -33,7 +33,7 @@ export const Layout: React.FC<LayoutProps> = ({ children, activeRoute, onNavigat
       </main>
 
       {/* Bottom Navigation */}
-      <nav className="fixed bottom-0 w-full bg-white border-t border-slate-200 shadow-lg z-50 safe-area-pb">
+      <nav className="fixed bottom-0 w-full bg-white border-t border-slate-200 shadow-lg z-50 pb-[env(safe-area-inset-bottom)]">
         <div className="flex justify-around items-center h-16">
           {NAV_ITEMS.map((item) => {
             const isActive = activeRoute === item.id;
