@@ -7,27 +7,15 @@ const KEYS = {
   LAST_UPDATED: 'ww_last_updated'
 };
 
-// Default Demo Data
+// Default Demo Data - Empty for new users
 const DEFAULT_ASSETS: UserAssets = {
-  income: [
-    { id: 'inc1', name: '税后工资(年薪)', amount: 150000 },
-    { id: 'inc2', name: '年终奖', amount: 30000 }
-  ],
-  liquid: [
-    { id: '1', name: '余额宝', amount: 35000, interestRate: 1.8, principal: 35000 },
-  ],
-  financial: [
-    { id: '3', name: '沪深300指数', amount: 18000, interestRate: 8.0, principal: 20000 },
-    { id: '31', name: '三年期国债', amount: 50000, interestRate: 2.3, principal: 50000 }
-  ],
-  realEstate: [
-    { id: '4', name: '自住房(估值)', amount: 2500000, interestRate: 1.5, principal: 2000000 }
-  ],
+  income: [],
+  liquid: [],
+  financial: [],
+  realEstate: [],
   protection: [],
   alternative: [],
-  liabilities: [
-    { id: '5', name: '房贷剩余本金', amount: 800000, interestRate: 3.1 }
-  ]
+  liabilities: []
 };
 
 export const storageService = {
@@ -152,20 +140,16 @@ export const storageService = {
         // If i=6 (current month) and no data, use currentAnchorValue
         // For past months, simulate a slightly lower value to show growth
         
-        let value = currentAnchorValue;
-        
-        // If we are predicting the future relative to the anchor (which shouldn't happen in this loop), 
-        // or backfilling the past.
-        
-        // Simple Simulation: Assume 0.8% monthly growth
-        // Past Value = Current / (1.008 ^ months_back)
-        const monthsAgo = 6 - i;
-        
-        // Add some randomness
-        const noise = 1 - (Math.random() * 0.02 - 0.01); // +/- 1%
-        const simulatedValue = Math.floor(currentAnchorValue / Math.pow(1.008, monthsAgo));
-        
-        data.push({ date: dateStr, value: simulatedValue });
+        // If current value is 0 (new user), history should be 0 too
+        if (currentAnchorValue === 0) {
+             data.push({ date: dateStr, value: 0 });
+        } else {
+            // Simple Simulation: Assume 0.8% monthly growth
+            const monthsAgo = 6 - i;
+            const noise = 1 - (Math.random() * 0.02 - 0.01); // +/- 1%
+            const simulatedValue = Math.floor(currentAnchorValue / Math.pow(1.008, monthsAgo));
+            data.push({ date: dateStr, value: simulatedValue });
+        }
       }
     }
     return data;

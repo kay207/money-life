@@ -155,7 +155,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigate, user }) => {
   };
 
   return (
-    <div className="px-4 pt-14 pb-24 space-y-6 relative">
+    <div className="px-4 pt-20 pb-24 space-y-6 relative">
       <Confetti isActive={showConfetti} />
 
       {/* Header */}
@@ -223,7 +223,37 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigate, user }) => {
          </div>
       </div>
 
-      {/* Time Machine (Trend Chart) */}
+      {/* Asset Structure Chart (Now Above Trend Chart) */}
+      <div className="bg-white p-5 rounded-3xl shadow-sm border border-slate-100">
+        <h3 className="font-bold text-slate-800 mb-4 flex items-center gap-2">
+            <span className="text-lg">🍰</span> 资产分布
+        </h3>
+        {chartData.length > 0 ? (
+          <>
+            <AssetChart data={chartData} />
+            <div className="mt-4 space-y-3">
+                 {chartData.map((item, idx) => (
+                   <div key={idx} className="flex items-center justify-between p-2 hover:bg-slate-50 rounded-xl transition-colors">
+                     <div className="flex items-center gap-3">
+                        <div className="w-3 h-3 rounded-full flex-shrink-0" style={{backgroundColor: item.color}}></div>
+                        <span className="font-medium text-sm text-slate-700">{item.name}</span>
+                     </div>
+                     <div className="text-right">
+                        <span className="font-bold text-sm text-slate-900 block">¥ {item.value?.toLocaleString()}</span>
+                        <span className="text-[10px] text-slate-400 block">{item.percentage}%</span>
+                     </div>
+                   </div>
+                 ))}
+            </div>
+          </>
+        ) : (
+          <div className="py-8 text-center text-slate-400 text-sm">
+             暂无资产数据，请先点击上方“开始盘点”添加。
+          </div>
+        )}
+      </div>
+
+      {/* Time Machine (Trend Chart) - Moved to bottom */}
       <div className="bg-white p-5 rounded-3xl shadow-sm border border-slate-100">
          <div className="flex justify-between items-center mb-4">
             <h3 className="font-bold text-slate-800 flex items-center gap-2">
@@ -234,34 +264,11 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigate, user }) => {
          <AssetTrendChart data={historyData} />
       </div>
 
-      {/* Asset Structure Chart */}
-      <div className="bg-white p-5 rounded-3xl shadow-sm border border-slate-100">
-        <h3 className="font-bold text-slate-800 mb-4 flex items-center gap-2">
-            <span className="text-lg">🍰</span> 资产分布
-        </h3>
-        <AssetChart data={chartData} />
-        {/* Simplified list */}
-        <div className="mt-4 space-y-3">
-             {chartData.map((item, idx) => (
-               <div key={idx} className="flex items-center justify-between p-2 hover:bg-slate-50 rounded-xl transition-colors">
-                 <div className="flex items-center gap-3">
-                    <div className="w-3 h-3 rounded-full flex-shrink-0" style={{backgroundColor: item.color}}></div>
-                    <span className="font-medium text-sm text-slate-700">{item.name}</span>
-                 </div>
-                 <div className="text-right">
-                    <span className="font-bold text-sm text-slate-900 block">¥ {item.value?.toLocaleString()}</span>
-                    <span className="text-[10px] text-slate-400 block">{item.percentage}%</span>
-                 </div>
-               </div>
-             ))}
-        </div>
-      </div>
-
       {/* Full Screen Asset Studio (Modal) */}
       {isEditing && (
         <div className="fixed inset-0 z-50 flex flex-col bg-white animate-in slide-in-from-bottom-5 duration-300 h-[100dvh]">
             {/* Header */}
-            <div className="bg-white px-5 py-4 flex items-center justify-between border-b border-slate-100 shrink-0">
+            <div className="bg-white px-5 pt-12 pb-4 flex items-center justify-between border-b border-slate-100 shrink-0">
                 <div>
                    <h3 className="text-xl font-extrabold text-slate-900">资产工作室</h3>
                    <p className="text-xs text-slate-400 mt-0.5">一点一滴，记录美好生活</p>

@@ -26,15 +26,15 @@ const NAV_ITEMS: NavItem[] = [
 
 export const Layout: React.FC<LayoutProps> = ({ children, activeRoute, onNavigate }) => {
   return (
-    <div className="flex flex-col h-full bg-slate-50">
-      {/* Main Content Area */}
-      <main className="flex-1 overflow-y-auto overflow-x-hidden pb-20 no-scrollbar">
+    <div className="flex flex-col min-h-screen bg-slate-50">
+      {/* Main Content Area - Native Scroll */}
+      <main className="flex-1 w-full max-w-md mx-auto">
         {children}
       </main>
 
       {/* Bottom Navigation */}
-      <nav className="fixed bottom-0 w-full bg-white border-t border-slate-200 shadow-lg z-50 pb-[env(safe-area-inset-bottom)]">
-        <div className="flex justify-around items-center h-16">
+      <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 shadow-lg z-50 pb-[env(safe-area-inset-bottom)]">
+        <div className="flex justify-around items-center h-16 max-w-md mx-auto">
           {NAV_ITEMS.map((item) => {
             const isActive = activeRoute === item.id;
             return (
