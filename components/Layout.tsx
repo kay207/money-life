@@ -1,0 +1,66 @@
+import React from 'react';
+import { AppRoute, NavItem } from '../types';
+
+interface LayoutProps {
+  children: React.ReactNode;
+  activeRoute: AppRoute;
+  onNavigate: (route: AppRoute) => void;
+}
+
+const NAV_ITEMS: NavItem[] = [
+  {
+    id: AppRoute.HOME,
+    label: '概览',
+    icon: (
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+    ),
+  },
+  {
+    id: AppRoute.PLAN,
+    label: '目标规划',
+    icon: (
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
+    ),
+  },
+  {
+    id: AppRoute.LEARN,
+    label: '学理财',
+    icon: (
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+    ),
+  },
+];
+
+export const Layout: React.FC<LayoutProps> = ({ children, activeRoute, onNavigate }) => {
+  return (
+    <div className="flex flex-col h-full bg-slate-50">
+      {/* Main Content Area */}
+      <main className="flex-1 overflow-y-auto overflow-x-hidden pb-20 no-scrollbar">
+        {children}
+      </main>
+
+      {/* Bottom Navigation */}
+      <nav className="fixed bottom-0 w-full bg-white border-t border-slate-200 shadow-lg z-50 safe-area-pb">
+        <div className="flex justify-around items-center h-16">
+          {NAV_ITEMS.map((item) => {
+            const isActive = activeRoute === item.id;
+            return (
+              <button
+                key={item.id}
+                onClick={() => onNavigate(item.id)}
+                className={`flex flex-col items-center justify-center w-full h-full transition-colors duration-200 ${
+                  isActive ? 'text-brand-600' : 'text-slate-400 hover:text-slate-600'
+                }`}
+              >
+                <div className={`transition-transform duration-200 ${isActive ? 'scale-110' : 'scale-100'}`}>
+                  {item.icon}
+                </div>
+                <span className="text-[10px] mt-1 font-medium">{item.label}</span>
+              </button>
+            );
+          })}
+        </div>
+      </nav>
+    </div>
+  );
+};
