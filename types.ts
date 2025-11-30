@@ -2,8 +2,7 @@ import React from 'react';
 
 export enum AppRoute {
   HOME = 'HOME',
-  PLAN = 'PLAN',
-  LEARN = 'LEARN'
+  PLAN = 'PLAN'
 }
 
 export interface NavItem {
@@ -31,7 +30,7 @@ export interface AssetAllocation {
 export interface AssetItem {
   id: string;
   name: string;
-  amount: number; // Current Market Value
+  amount: number; // Current Market Value (or Annual Amount for Income)
   interestRate?: number; // Estimated Annual Yield
   principal?: number; // Invested Principal
   note?: string;
@@ -39,12 +38,36 @@ export interface AssetItem {
 
 // Scientific CFP Classification
 export interface UserAssets {
+  income: AssetItem[]; // New: Cash Flow (Annual)
   liquid: AssetItem[];
   financial: AssetItem[];
   realEstate: AssetItem[];
   protection: AssetItem[];
   alternative: AssetItem[];
   liabilities: AssetItem[];
+}
+
+// User Profile for Local Storage
+export interface UserProfile {
+  name: string;
+  joinedAt: number;
+}
+
+// Asset Snapshot for History Tracking
+export interface AssetSnapshot {
+  id: string;
+  timestamp: number;
+  dateStr: string; // YYYY.MM
+  netWorth: number;
+  totalAssets: number;
+  totalLiabilities: number;
+  data: UserAssets; // Complete backup
+}
+
+// For Trend Chart
+export interface AssetHistoryItem {
+  date: string;
+  value: number;
 }
 
 // --- Goal Planning Types ---
